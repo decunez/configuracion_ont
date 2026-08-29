@@ -146,8 +146,14 @@
         .tplink { background-color: #00a9e0; }
         .tplink:hover { background-color: #0082ad; }
 
-        .ventas { background-color: #28a745; }
+        .netlife { background-color: #ff6f61; }
+        .netlife:hover { background-color: #e65c50; }
+
+        .ventas { background-color: #3e54d4; }
         .ventas:hover { background-color: #218838; }
+
+        .vistas { background-color: #42c8dd; }
+        .vistas:hover { background-color: #3ec9df; }
 
         @media (min-width: 500px) {
             .btn-container {
