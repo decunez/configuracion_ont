@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#BCE3C4">
+    <meta name="theme-color" content="#0284c7">
     <title>Gestión de ONTs</title>
 
-    <!-- Rutas relativas corregidas para GitHub Pages -->
     <link rel="manifest" href="./manifest.json">
+    <link rel="icon" type="image/svg+xml" href="./icon.svg">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="main-wrapper">
-        <!-- Tarjeta 1: Sección DNS -->
         <div class="card">
             <h2>Sección DNS</h2>
             
@@ -34,7 +33,6 @@
             </div>
         </div>
 
-        <!-- Tarjeta 2: Gestión Wi-Fi -->
         <div class="card">
             <h2>Gestión Wi-Fi</h2>
             
@@ -55,7 +53,6 @@
             </div>
         </div>
 
-        <!-- Sección Inferior: Gestión de ONTs -->
         <h1>Gestión de Configuración ONT</h1>
 
         <div class="btn-container">
@@ -75,12 +72,10 @@
 
         function copiarTexto(idInput, boton) {
             const input = document.getElementById(idInput);
-            
             if (!input.value.trim()) return;
 
             navigator.clipboard.writeText(input.value).then(() => {
                 const textoOriginal = boton.innerText;
-                
                 boton.innerText = "¡Copiado!";
                 boton.classList.add("copied");
                 
@@ -91,7 +86,6 @@
             });
         }
 
-        // Registro del Service Worker usando ruta relativa
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
