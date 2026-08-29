@@ -10,9 +10,15 @@
   "theme_color": "#0284c7",
   "icons": [
     {
-      "src": "./icon.svg",
-      "sizes": "192x192 512x512",
-      "type": "image/svg+xml",
+      "src": "https://cdn-icons-png.flaticon.com/192/900/900782.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/900/900782.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ]
