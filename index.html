@@ -86,6 +86,7 @@
             });
         }
 
+        // Corrección de la ruta del Service Worker para subcarpetas en GitHub Pages
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')

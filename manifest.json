@@ -1,9 +1,11 @@
 {
   "name": "Gestión de ONTs",
   "short_name": "ONTs",
+  "description": "Aplicación para gestión y configuración de ONTs",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#f0f2f5",
   "theme_color": "#0284c7",
   "icons": [
