@@ -2,10 +2,17 @@
   "name": "Gestión de ONTs",
   "short_name": "ONTs",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#f0f2f5",
-  "theme_color": "#00a9e0",
+  "theme_color": "#BCE3C4",
   "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/192/900/900782.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
     {
       "src": "https://cdn-icons-png.flaticon.com/512/900/900782.png",
       "sizes": "512x512",

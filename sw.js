@@ -1,3 +1,11 @@
-self.addEventListener('fetch', function(event) {
-    // Requisito mínimo para habilitar la instalación como app
+self.addEventListener('install', (event) => {
+    self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+    event.waitUntil(clients.claim());
+});
+
+self.addEventListener('fetch', (event) => {
+    // Requisito de interceptor HTTP para PWA
 });
