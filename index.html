@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
-    <link rel="manifest" href="../manifest.json">
-    <meta name="theme-color" content="#BCE3C4">
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#BCE3C4">
     <title>Gestión de ONTs</title>
+
+    <!-- Rutas relativas corregidas para GitHub Pages -->
+    <link rel="manifest" href="./manifest.json">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="main-wrapper">
+
+    <div class="main-wrapper">
         <!-- Tarjeta 1: Sección DNS -->
         <div class="card">
             <h2>Sección DNS</h2>
@@ -63,11 +64,11 @@
         </div>
     </div>
 
-      <footer style="text-align: center; padding: 1.5rem 0; color: var(--text-muted);">
-    <p>&copy; 2026 Daniel Cuñez - Todos los derechos reservados</p>
-  </footer>
+    <footer style="text-align: center; padding: 1.5rem 0; color: #718096;">
+        <p>&copy; 2026 Daniel Cuñez - Todos los derechos reservados</p>
+    </footer>
 
-<script>
+    <script>
         function abrirOnt(url) {
             window.location.href = url;
         }
@@ -75,7 +76,6 @@
         function copiarTexto(idInput, boton) {
             const input = document.getElementById(idInput);
             
-            // Si la caja editable está vacía, no realiza la copia
             if (!input.value.trim()) return;
 
             navigator.clipboard.writeText(input.value).then(() => {
@@ -90,15 +90,16 @@
                 }, 1500);
             });
         }
+
+        // Registro del Service Worker usando ruta relativa
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(() => console.log('Service Worker registrado con éxito'))
+                    .catch(err => console.error('Error registrando Service Worker:', err));
+            });
+        }
     </script>
-  <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(() => console.log('Service Worker registrado con éxito'))
-        .catch(err => console.error('Error registrando Service Worker:', err));
-    });
-  }
-</script>
+
 </body>
 </html>

@@ -1,21 +1,16 @@
 {
-  "name": "ONT",
-  "short_name": "Daniel_Cuñez",
-  "description": "Sistema de gestión de ONT",
-  "start_url": "index.html",
+  "name": "Gestión de ONTs",
+  "short_name": "ONTs",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#0284c7",
+  "background_color": "#f0f2f5",
+  "theme_color": "#00a9e0",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/1043/1043444.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "https://cdn-icons-png.flaticon.com/512/1043/1043444.png",
+      "src": "https://cdn-icons-png.flaticon.com/512/900/900782.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
