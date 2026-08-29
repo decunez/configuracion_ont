@@ -146,6 +146,9 @@
         .tplink { background-color: #00a9e0; }
         .tplink:hover { background-color: #0082ad; }
 
+        .ventas { background-color: #28a745; }
+        .ventas:hover { background-color: #218838; }
+
         @media (min-width: 500px) {
             .btn-container {
                 flex-direction: row;
