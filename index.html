@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#BCE3C4">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de ONTs</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="main-wrapper">
+        <!-- Tarjeta 1: Sección DNS -->
+        <div class="card">
+            <h2>Sección DNS</h2>
+            
+            <div class="field-group">
+                <label for="dns1">DNS 1:</label>
+                <div class="input-box">
+                    <input type="text" id="dns1" value="200.63.105.194" readonly>
+                    <button class="btn-copy" onclick="copiarTexto('dns1', this)">Copiar</button>
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label for="dns2">DNS 2:</label>
+                <div class="input-box">
+                    <input type="text" id="dns2" value="45.236.107.126" readonly>
+                    <button class="btn-copy" onclick="copiarTexto('dns2', this)">Copiar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta 2: Gestión Wi-Fi -->
+        <div class="card">
+            <h2>Gestión Wi-Fi</h2>
+            
+            <div class="field-group">
+                <label for="wifi-name">Nombre de red:</label>
+                <div class="input-box">
+                    <input type="text" id="wifi-name" placeholder="Escribe el nombre de red">
+                    <button class="btn-copy" onclick="copiarTexto('wifi-name', this)">Copiar</button>
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label for="wifi-pass">Contraseña:</label>
+                <div class="input-box">
+                    <input type="text" id="wifi-pass" placeholder="Escribe la contraseña">
+                    <button class="btn-copy" onclick="copiarTexto('wifi-pass', this)">Copiar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección Inferior: Gestión de ONTs -->
+        <h1>Gestión de Configuración ONT</h1>
+
+        <div class="btn-container">
+            <button class="btn huawei" onclick="abrirOnt('http://192.168.18.1')">ONT Huawei</button>
+            <button class="btn tplink" onclick="abrirOnt('http://192.168.1.1/superadmin')">ONT TP-Link</button>
+        </div>
+    </div>
+
+      <footer style="text-align: center; padding: 1.5rem 0; color: var(--text-muted);">
+    <p>&copy; 2026 Daniel Cuñez - Todos los derechos reservados</p>
+  </footer>
+
+<script>
+        function abrirOnt(url) {
+            window.location.href = url;
+        }
+
+        function copiarTexto(idInput, boton) {
+            const input = document.getElementById(idInput);
+            
+            // Si la caja editable está vacía, no realiza la copia
+            if (!input.value.trim()) return;
+
+            navigator.clipboard.writeText(input.value).then(() => {
+                const textoOriginal = boton.innerText;
+                
+                boton.innerText = "¡Copiado!";
+                boton.classList.add("copied");
+                
+                setTimeout(() => {
+                    boton.innerText = textoOriginal;
+                    boton.classList.remove("copied");
+                }, 1500);
+            });
+        }
+    </script>
+  <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log('Service Worker registrado con éxito'))
+        .catch(err => console.error('Error registrando Service Worker:', err));
+    });
+  }
+</script>
+</body>
+</html>

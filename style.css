@@ -1,0 +1,153 @@
+* {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+
+        /* Contenedor unificado para centrar y estructurar las tarjetas */
+        .main-wrapper {
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Estilo uniforme para las tarjetas blancas */
+        .card {
+            background-color: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            width: 100%;
+        }
+
+        .card h2 {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 16px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+
+        .field-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .field-group label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #444;
+        }
+
+        .input-box {
+            display: flex;
+            gap: 8px;
+        }
+
+        .input-box input {
+            flex: 1;
+            padding: 10px 12px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #2d3748;
+            background-color: #ffffff;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .input-box input:focus {
+            border-color: #00a9e0;
+            box-shadow: 0 0 0 3px rgba(0, 169, 224, 0.15);
+        }
+
+        .input-box input[readonly] {
+            background-color: #f8f9fa;
+            cursor: default;
+        }
+
+        .btn-copy {
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #4a5568;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-copy:hover {
+            background-color: #2d3748;
+        }
+
+        .btn-copy.copied {
+            background-color: #28a745;
+        }
+
+        /* Título Inferior */
+        h1 {
+            color: #333;
+            margin-top: 5px;
+            text-align: center;
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+        }
+
+        /* Botones de ONT */
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn:hover { transform: translateY(-2px); }
+        .btn:active { transform: translateY(0); }
+
+        .huawei { background-color: #ce0e2d; }
+        .huawei:hover { background-color: #a80b24; }
+
+        .tplink { background-color: #00a9e0; }
+        .tplink:hover { background-color: #0082ad; }
+
+        @media (min-width: 500px) {
+            .btn-container {
+                flex-direction: row;
+            }
+        }
