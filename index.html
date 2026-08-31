@@ -85,23 +85,43 @@
     <script>
         // Función para redirigir a las páginas de ONT y accesos
         async function abrirOnt(url, boton) {
+            // 1. Comprobación rápida de estado de red del dispositivo
+            if (!navigator.onLine) {
+                alert("No está conectado a la red");
+                return;
+            }
+
             const textoOriginal = boton.innerText;
             boton.innerText = "Verificando...";
             boton.disabled = true;
 
-            const controller = new AbortController();
-            // Tiempo límite de espera: 2000 ms (2.5 segundos)
-            const timeoutId = setTimeout(() => controller.abort(), 2000);
+            // 2. Verificación mediante imagen (evita el bloqueo estricto de fetch en móviles)
+            const probarConexion = new Promise((resolve, reject) => {
+                const img = new Image();
+                const timer = setTimeout(() => {
+                    img.src = "";
+                    reject("timeout");
+                }, 2000);
+
+                // Si responde (sea imagen o error 404/200), la IP es alcanzable en la red
+                img.onload = img.onerror = () => {
+                    clearTimeout(timer);
+                    resolve();
+                };
+
+                const urlBase = url.replace(/\/$/, '');
+                img.src = `${urlBase}/favicon.ico?_=${Date.now()}`;
+            });
 
             try {
-                await fetch(url, { mode: 'no-cors', signal: controller.signal });
-                clearTimeout(timeoutId);
+                await probarConexion;
                 window.location.href = url;
             } catch (error) {
-                clearTimeout(timeoutId);
+                alert("No está conectado a la red");
+            } finally {
+                // Restablece el botón sin importar el resultado
                 boton.innerText = textoOriginal;
                 boton.disabled = false;
-                alert("No está conectado a la red");
             }
         }
         // Función para copiar elementos secuencialmente al portapapeles
