@@ -13,6 +13,7 @@
 <body>
 
     <div class="main-wrapper">
+        <!-- Tarjeta 1: Sección DNS -->
         <div class="card">
             <h2>Sección DNS</h2>
             
@@ -20,7 +21,6 @@
                 <label for="dns1">DNS 1:</label>
                 <div class="input-box">
                     <input type="text" id="dns1" value="200.63.105.194" readonly>
-                    <button class="btn-copy" onclick="copiarTexto('dns1', this)">Copiar</button>
                 </div>
             </div>
 
@@ -28,11 +28,13 @@
                 <label for="dns2">DNS 2:</label>
                 <div class="input-box">
                     <input type="text" id="dns2" value="45.236.107.126" readonly>
-                    <button class="btn-copy" onclick="copiarTexto('dns2', this)">Copiar</button>
                 </div>
             </div>
+
+            <button class="btn-copy" style="width: 100%; margin-top: 12px;" onclick="copiarSecuencial(['dns2', 'dns1'], this)">Copiar DNS</button>
         </div>
 
+        <!-- Tarjeta 2: RED Wi-Fi -->
         <div class="card">
             <h2>RED Wi-Fi</h2>
             
@@ -40,7 +42,6 @@
                 <label for="wifi-name">Nombre de red:</label>
                 <div class="input-box">
                     <input type="text" id="wifi-name" placeholder="Escribe el nombre de red">
-                    <button class="btn-copy" onclick="copiarTexto('wifi-name', this)">Copiar</button>
                 </div>
             </div>
 
@@ -48,54 +49,80 @@
                 <label for="wifi-pass">Contraseña:</label>
                 <div class="input-box">
                     <input type="text" id="wifi-pass" placeholder="Escribe la contraseña">
-                    <button class="btn-copy" onclick="copiarTexto('wifi-pass', this)">Copiar</button>
                 </div>
             </div>
+
+            <button class="btn-copy" style="width: 100%; margin-top: 12px;" onclick="copiarSecuencial(['wifi-pass', 'wifi-name'], this)">Copiar datos Wi-Fi</button>
         </div>
 
         <h1>ACCESO ONT</h1>
 
         <div class="btn-container">
-            <button class="btn huawei" onclick="abrirOnt('http://192.168.18.1')">HUAWEI</button>
-            <button class="btn tplink" onclick="abrirOnt('http://192.168.1.1/superadmin')">TP-LINK</button>
-            <button class="btn netlife" onclick="abrirOnt('http://192.168.100.1/')">NETLIFE</button>
-        </div>
+    <button class="btn huawei" onclick="abrirOnt('http://192.168.18.1', this)">HUAWEI</button>
+    <button class="btn tplink" onclick="abrirOnt('http://192.168.1.1/superadmin', this)">TP-LINK</button>
+    <button class="btn netlife" onclick="abrirOnt('http://192.168.100.1/', this)">NETLIFE</button>
+</div>
 
-
+        <!-- Sección Acceso IPlanet -->
         <h1>ACCESO IPLANET</h1>
-        <div class="btn-container"></div>
-        <button class="btn ventas" onclick="abrirOnt('http://iplanet.ec:82/ventas/')">VENTAS</button>
-        <button class="btn vistas" onclick="abrirOnt('http://iplanet.ec:82/soportejsx/reparaciones')">VISITAS</button>
-        </div>
- 
+
+        <div class="btn-container">
+    <button class="btn ventas" onclick="abrirOnt('http://iplanet.ec:82/ventas/', this)">VENTAS</button>
+    <button class="btn vistas" onclick="abrirOnt('http://iplanet.ec:82/soportejsx/reparaciones', this)">VISITAS</button>
+</div>
+
     </div>
 
     <footer style="text-align: center; padding: 1.5rem 0; color: #718096;">
         <p>&copy; 2026 Daniel Cuñez - Todos los derechos reservados</p>
     </footer>
 
-    <script>
-        function abrirOnt(url) {
-            window.location.href = url;
+<script>
+        // Función para redirigir a las páginas de ONT y accesos
+        async function abrirOnt(url, boton) {
+    const textoOriginal = boton.innerText;
+    boton.innerText = "Verificando...";
+    boton.disabled = true;
+
+    const controller = new AbortController();
+    // Tiempo límite de espera: 2500 ms (2.5 segundos)
+    const timeoutId = setTimeout(() => controller.abort(), 2500);
+
+    try {
+        await fetch(url, { mode: 'no-cors', signal: controller.signal });
+        clearTimeout(timeoutId);
+        window.location.href = url;
+    } catch (error) {
+        clearTimeout(timeoutId);
+        boton.innerText = textoOriginal;
+        boton.disabled = false;
+        alert("No está conectado a la red");
+    }
+}
+        // Función para copiar elementos secuencialmente al portapapeles
+        async function copiarSecuencial(arrayIds, boton) {
+            const valores = arrayIds
+                .map(id => document.getElementById(id).value.trim())
+                .filter(val => val !== "");
+
+            if (valores.length === 0) return;
+
+            for (const texto of valores) {
+                await navigator.clipboard.writeText(texto);
+                await new Promise(resolve => setTimeout(resolve, 400));
+            }
+
+            const textoOriginal = boton.innerText;
+            boton.innerText = "¡Copiados!";
+            boton.classList.add("copied");
+            
+            setTimeout(() => {
+                boton.innerText = textoOriginal;
+                boton.classList.remove("copied");
+            }, 1500);
         }
 
-        function copiarTexto(idInput, boton) {
-            const input = document.getElementById(idInput);
-            if (!input.value.trim()) return;
-
-            navigator.clipboard.writeText(input.value).then(() => {
-                const textoOriginal = boton.innerText;
-                boton.innerText = "¡Copiado!";
-                boton.classList.add("copied");
-                
-                setTimeout(() => {
-                    boton.innerText = textoOriginal;
-                    boton.classList.remove("copied");
-                }, 1500);
-            });
-        }
-
-        // Corrección de la ruta del Service Worker para subcarpetas en GitHub Pages
+        // Registro del Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
