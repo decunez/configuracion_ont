@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,13 +11,14 @@
     <link rel="icon" type="image/svg+xml" href="./icon.svg">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <div class="main-wrapper">
         <!-- Tarjeta 1: Sección DNS -->
         <div class="card">
             <h2>Sección DNS</h2>
-            
+
             <div class="field-group">
                 <label for="dns1">DNS 1:</label>
                 <div class="input-box">
@@ -31,13 +33,14 @@
                 </div>
             </div>
 
-            <button class="btn-copy" style="width: 100%; margin-top: 12px;" onclick="copiarSecuencial(['dns2', 'dns1'], this)">Copiar DNS</button>
+            <button class="btn-copy" style="width: 100%; margin-top: 12px;"
+                onclick="copiarSecuencial(['dns2', 'dns1'], this)">Copiar DNS</button>
         </div>
 
         <!-- Tarjeta 2: RED Wi-Fi -->
         <div class="card">
             <h2>RED Wi-Fi</h2>
-            
+
             <div class="field-group">
                 <label for="wifi-name">Nombre de red:</label>
                 <div class="input-box">
@@ -52,24 +55,26 @@
                 </div>
             </div>
 
-            <button class="btn-copy" style="width: 100%; margin-top: 12px;" onclick="copiarSecuencial(['wifi-pass', 'wifi-name'], this)">Copiar datos Wi-Fi</button>
+            <button class="btn-copy" style="width: 100%; margin-top: 12px;"
+                onclick="copiarSecuencial(['wifi-pass', 'wifi-name'], this)">Copiar datos Wi-Fi</button>
         </div>
 
         <h1>ACCESO ONT</h1>
 
         <div class="btn-container">
-    <button class="btn huawei" onclick="abrirOnt('http://192.168.18.1', this)">HUAWEI</button>
-    <button class="btn tplink" onclick="abrirOnt('http://192.168.1.1/superadmin', this)">TP-LINK</button>
-    <button class="btn netlife" onclick="abrirOnt('http://192.168.100.1/', this)">NETLIFE</button>
-</div>
+            <button class="btn huawei" onclick="abrirOnt('http://192.168.18.1', this)">HUAWEI</button>
+            <button class="btn tplink" onclick="abrirOnt('http://192.168.1.1/superadmin', this)">TP-LINK</button>
+            <button class="btn netlife" onclick="abrirOnt('http://192.168.100.1/', this)">NETLIFE</button>
+        </div>
 
         <!-- Sección Acceso IPlanet -->
         <h1>ACCESO IPLANET</h1>
 
         <div class="btn-container">
-    <button class="btn ventas" onclick="abrirOnt('http://iplanet.ec:82/ventas/', this)">VENTAS</button>
-    <button class="btn vistas" onclick="abrirOnt('http://iplanet.ec:82/soportejsx/reparaciones', this)">VISITAS</button>
-</div>
+            <button class="btn ventas" onclick="abrirOnt('http://iplanet.ec:82/ventas/', this)">VENTAS</button>
+            <button class="btn vistas"
+                onclick="abrirOnt('http://iplanet.ec:82/soportejsx/reparaciones', this)">VISITAS</button>
+        </div>
 
     </div>
 
@@ -77,28 +82,28 @@
         <p>&copy; 2026 Daniel Cuñez - Todos los derechos reservados</p>
     </footer>
 
-<script>
+    <script>
         // Función para redirigir a las páginas de ONT y accesos
         async function abrirOnt(url, boton) {
-    const textoOriginal = boton.innerText;
-    boton.innerText = "Verificando...";
-    boton.disabled = true;
+            const textoOriginal = boton.innerText;
+            boton.innerText = "Verificando...";
+            boton.disabled = true;
 
-    const controller = new AbortController();
-    // Tiempo límite de espera: 2000 ms (2.5 segundos)
-    const timeoutId = setTimeout(() => controller.abort(), 2000);
+            const controller = new AbortController();
+            // Tiempo límite de espera: 2000 ms (2.5 segundos)
+            const timeoutId = setTimeout(() => controller.abort(), 2000);
 
-    try {
-        await fetch(url, { mode: 'no-cors', signal: controller.signal });
-        clearTimeout(timeoutId);
-        window.location.href = url;
-    } catch (error) {
-        clearTimeout(timeoutId);
-        boton.innerText = textoOriginal;
-        boton.disabled = false;
-        alert("No está conectado a la red");
-    }
-}
+            try {
+                await fetch(url, { mode: 'no-cors', signal: controller.signal });
+                clearTimeout(timeoutId);
+                window.location.href = url;
+            } catch (error) {
+                clearTimeout(timeoutId);
+                boton.innerText = textoOriginal;
+                boton.disabled = false;
+                alert("No está conectado a la red");
+            }
+        }
         // Función para copiar elementos secuencialmente al portapapeles
         async function copiarSecuencial(arrayIds, boton) {
             const valores = arrayIds
@@ -115,7 +120,7 @@
             const textoOriginal = boton.innerText;
             boton.innerText = "¡Copiados!";
             boton.classList.add("copied");
-            
+
             setTimeout(() => {
                 boton.innerText = textoOriginal;
                 boton.classList.remove("copied");
@@ -133,4 +138,5 @@
     </script>
 
 </body>
+
 </html>
