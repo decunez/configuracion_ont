@@ -44,19 +44,20 @@
             <div class="field-group">
                 <label for="wifi-name">Nombre de red:</label>
                 <div class="input-box">
-                    <input type="text" id="wifi-name" placeholder="Escribe el nombre de red">
+                    <input type="text" id="wifi-name" placeholder="Escribe el nombre de red"
+                        oninput="validarInputsWifi()">
                 </div>
             </div>
 
             <div class="field-group">
                 <label for="wifi-pass">Contraseña:</label>
                 <div class="input-box">
-                    <input type="text" id="wifi-pass" placeholder="Escribe la contraseña">
+                    <input type="text" id="wifi-pass" placeholder="Escribe la contraseña" oninput="validarInputsWifi()">
                 </div>
             </div>
 
-            <button class="btn-copy" style="width: 100%; margin-top: 12px;"
-                onclick="copiarSecuencial(['wifi-pass', 'wifi-name'], this)">Copiar datos Wi-Fi</button>
+            <button class="btn-copy" style="width: 100%; margin-top: 12px;" onclick="copiarWifi(this)">Copiar datos
+                Wi-Fi</button>
         </div>
 
         <h1>ACCESO ONT</h1>
@@ -146,6 +147,66 @@
                 boton.classList.remove("copied");
             }, 1500);
         }
+
+
+        async function copiarWifi(boton) {
+            const nombre = document.getElementById('wifi-name').value.trim();
+            const pass = document.getElementById('wifi-pass').value.trim();
+
+            // Validar campos vacíos
+            if (!nombre || !pass) {
+                alert("Por favor, llena ambos campos (Nombre de red y Contraseña).");
+                return;
+            }
+
+            // Validar que el nombre solo tenga letras, números y espacios (sin caracteres especiales)
+            const regexValido = /^[a-zA-Z0-9\s]+$/;
+            if (!regexValido.test(nombre)) {
+                alert("El nombre de red solo debe contener letras, números y espacios.");
+                return;
+            }
+
+            // Validar longitud mínima de 8 caracteres en la contraseña
+            if (pass.length < 8) {
+                alert("La contraseña debe tener al menos 8 caracteres.");
+                return;
+            }
+
+            // Ejecuta la copia secuencial si todas las validaciones son correctas
+            await copiarSecuencial(['wifi-pass', 'wifi-name'], boton);
+        }
+
+
+        function validarInputsWifi() {
+            const inputNombre = document.getElementById('wifi-name');
+            const inputPass = document.getElementById('wifi-pass');
+
+            const nombreVal = inputNombre.value.trim();
+            const passVal = inputPass.value;
+
+            // Validación Nombre (no vacío y sin caracteres especiales)
+            const regexValido = /^[a-zA-Z0-9\s]+$/;
+            if (nombreVal !== "" && regexValido.test(nombreVal)) {
+                inputNombre.classList.add('valid');
+                inputNombre.classList.remove('invalid');
+            } else {
+                inputNombre.classList.add('invalid');
+                inputNombre.classList.remove('valid');
+            }
+
+            // Validación Contraseña (mínimo 8 caracteres)
+            if (passVal.length >= 8) {
+                inputPass.classList.add('valid');
+                inputPass.classList.remove('invalid');
+            } else {
+                inputPass.classList.add('invalid');
+                inputPass.classList.remove('valid');
+            }
+        }
+
+        // Ejecutar al cargar la página para que inicien en rojo por defecto
+        window.addEventListener('DOMContentLoaded', validarInputsWifi);
+
 
         // Registro del Service Worker
         if ('serviceWorker' in navigator) {

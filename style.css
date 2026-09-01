@@ -160,3 +160,13 @@
                 flex-direction: row;
             }
         }
+
+
+        /* Estilos para bordes dinámicos de validación */
+.input-box input.invalid {
+    border: 2px solid #ef4444 !important; /* Rojo */
+}
+
+.input-box input.valid {
+    border: 2px solid #22c55e !important; /* Verde */
+}
