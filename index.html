@@ -160,7 +160,7 @@
             }
 
             // Validar que el nombre solo tenga letras, números y espacios (sin caracteres especiales)
-            const regexValido = /^[a-zA-Z0-9\s]+$/;
+            const regexValido = /^[_-a-zA-Z0-9\s]+$/;
             if (!regexValido.test(nombre)) {
                 alert("El nombre de red solo debe contener letras, números y espacios.");
                 return;
