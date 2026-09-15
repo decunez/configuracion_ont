@@ -1,36 +1,26 @@
-const CACHE_NAME = 'ont-cache-v3'; // Cambiado a v3 para forzar la actualización
-const ASSETS_TO_CACHE = [
-  './',
-  './index.html',
-  './style.css',
-  './manifest.json',
-  './icon.svg'
-];
+const CACHE_NAME = 'v2'; // <--- Cambia la versión en cada actualización
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE))
-  );
-  self.skipWaiting();
+    // Forza al nuevo Service Worker a activarse sin esperar a que se cierren las ventanas
+    self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) {
-            return caches.delete(cache);
-          }
-        })
-      );
-    })
-  );
-  self.clients.claim();
+    event.waitUntil(
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames.map((cache) => {
+                    if (cache !== CACHE_NAME) {
+                        return caches.delete(cache); // Elimina archivos de la versión anterior
+                    }
+                })
+            );
+        }).then(() => self.clients.claim()) // Toma el control de la app inmediatamente
+    );
 });
 
 self.addEventListener('fetch', (event) => {
-    // Si la petición es hacia una IP externa o router, no la procesa el Service Worker
+    // Filtro para ignorar IPs externas/routers
     if (!event.request.url.startsWith(self.location.origin)) {
         return;
     }
